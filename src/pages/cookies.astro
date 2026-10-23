@@ -1,0 +1,42 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import clinicaData from '../data/taller';
+---
+
+<LegalLayout
+  title="Política de Cookies"
+  description={`Política de cookies de ${clinicaData.nombre} - Sitio web libre de rastreo`}
+>
+  <div class="space-y-6">
+    <section>
+      <h2 class="text-xl font-bold text-on-surface mb-2">1. Qué son las Cookies</h2>
+      <p>
+        Las cookies son pequeños archivos de texto que se descargan en el dispositivo del usuario al acceder a determinadas páginas web, con el fin de recordar preferencias de navegación o recopilar datos estadísticos.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-on-surface mb-2">2. Política de Cero Rastreo / Sin Cookies de Terceros</h2>
+      <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-body-sm mb-3">
+        <strong>Compromiso de privacidad:</strong> Este sitio web está diseñado con principios de mínima recopilación y máximo rendimiento. <strong>No utilizamos cookies analíticas, de perfilado ni de seguimiento publicitario de terceros</strong> (como Google Analytics, Meta Pixel o herramientas similares).
+      </div>
+      <p>
+        Por este motivo, su navegación en nuestra web no requiere la aceptación de molestos banners de cookies ni transfiere su perfil de navegación a redes publicitarias externas.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-on-surface mb-2">3. Enlaces a Servicios Externos</h2>
+      <p>
+        Este sitio web contiene enlaces directos hacia plataformas externas de terceros, tales como WhatsApp (Meta Platforms) y Google Maps. Al interactuar con dichos servicios externos mediante enlaces o al activar voluntariamente el mapa interactivo, regirán exclusivamente las políticas de cookies y privacidad propias de dichas plataformas.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-on-surface mb-2">4. Cómo Desactivar o Eliminar Cookies en su Navegador</h2>
+      <p>
+        Usted puede en todo momento restringir, bloquear o borrar cualquier cookie previamente almacenada en su equipo modificando la configuración de opciones de privacidad de su navegador habitual (Chrome, Firefox, Safari, Edge, etc.).
+      </p>
+    </section>
+  </div>
+</LegalLayout>

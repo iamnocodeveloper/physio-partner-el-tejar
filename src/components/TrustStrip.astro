@@ -1,0 +1,22 @@
+---
+import clinicaData from '../data/taller';
+import Icon from './Icon.astro';
+---
+
+<section class="w-full bg-inverse-surface text-on-primary py-6 sm:py-8 lg:py-10" aria-label="Pilares de confianza clínica">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+      {clinicaData.pilaresConfianza.map((pilar) => (
+        <div class="flex items-start gap-3.5 p-3.5 rounded-xl bg-surface-container-highest/10 hover:bg-surface-container-highest/15 transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-surface-container-highest/20 flex items-center justify-center shrink-0 text-tertiary-fixed">
+            <Icon name={pilar.icono} size={22} />
+          </div>
+          <div>
+            <h2 class="font-headline-sm text-label-md sm:text-label-lg text-white font-bold">{pilar.titulo}</h2>
+            <p class="font-body-sm text-xs sm:text-body-sm text-surface-dim mt-0.5 leading-snug">{pilar.descripcion}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

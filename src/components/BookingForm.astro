@@ -1,0 +1,248 @@
+---
+import clinicaData from '../data/taller';
+import Icon from './Icon.astro';
+---
+
+<section class="w-full py-12 sm:py-20 bg-inverse-surface text-white relative overflow-hidden" id="agenda">
+  <!-- Luz ambiental suave -->
+  <div class="absolute -top-40 -right-40 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10 flex flex-col gap-8 sm:gap-12">
+    <div class="max-w-2xl flex flex-col gap-2 sm:gap-3">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-highest/20 text-tertiary-fixed font-label-sm text-label-sm uppercase tracking-widest font-bold w-fit">
+        RESERVA TU VALORACIÓN
+      </div>
+      <h2 class="font-headline-lg text-[26px] leading-[32px] sm:text-headline-lg-mobile lg:text-headline-lg text-white font-bold">
+        TU RECUPERACIÓN PUEDE EMPEZAR HOY
+      </h2>
+      <p class="font-body-md sm:font-body-lg text-surface-dim">
+        Completa tus datos para coordinar de forma directa tu cita con nuestro equipo de fisioterapia en el sector El Tejar, Cuenca.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      <!-- Formulario Dinámico WhatsApp -->
+      <div class="lg:col-span-7 bg-surface-container-lowest text-on-surface p-6 sm:p-10 rounded-3xl shadow-2xl">
+        <form class="flex flex-col gap-4 sm:gap-5" id="appointmentForm" data-whatsapp-number={clinicaData.whatsapp}>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            <div class="flex flex-col gap-1.5">
+              <label class="font-label-sm text-xs sm:text-label-sm text-on-surface font-semibold" for="patientName">
+                Nombre y Apellido <span class="text-primary">*</span>
+              </label>
+              <input
+                class="w-full h-12 px-4 rounded-lg bg-surface-container-low text-on-surface font-body-md text-sm sm:text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary border border-surface-container transition-all"
+                id="patientName"
+                placeholder="Ej. Juan Pérez"
+                required
+                type="text"
+                autocomplete="name"
+              />
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label class="font-label-sm text-xs sm:text-label-sm text-on-surface font-semibold" for="patientPhone">
+                Número de WhatsApp <span class="text-primary">*</span>
+              </label>
+              <input
+                class="w-full h-12 px-4 rounded-lg bg-surface-container-low text-on-surface font-body-md text-sm sm:text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary border border-surface-container transition-all"
+                id="patientPhone"
+                placeholder="Ej. 099 123 4567"
+                required
+                type="tel"
+                autocomplete="tel"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label class="font-label-sm text-xs sm:text-label-sm text-on-surface font-semibold" for="treatmentSelect">
+              Tratamiento o Motivo de Consulta <span class="text-primary">*</span>
+            </label>
+            <select
+              class="w-full h-12 px-4 rounded-lg bg-surface-container-low text-on-surface font-body-md text-sm sm:text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary border border-surface-container transition-all cursor-pointer"
+              id="treatmentSelect"
+              required
+            >
+              <option disabled selected value="">Selecciona una opción</option>
+              {clinicaData.servicios.map((srv) => (
+                <option value={srv.titulo}>
+                  {srv.titulo} ({srv.precioTexto})
+                </option>
+              ))}
+              <option value="Otra consulta o dolor particular">Otra consulta o no estoy seguro</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            <div class="flex flex-col gap-1.5">
+              <label class="font-label-sm text-xs sm:text-label-sm text-on-surface font-semibold" for="prefDate">
+                Fecha Deseada <span class="text-primary">*</span>
+              </label>
+              <input
+                class="w-full h-12 px-4 rounded-lg bg-surface-container-low text-on-surface font-body-md text-sm sm:text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary border border-surface-container transition-all cursor-pointer"
+                id="prefDate"
+                required
+                type="date"
+              />
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label class="font-label-sm text-xs sm:text-label-sm text-on-surface font-semibold" for="prefTime">
+                Franja Horaria Preferida <span class="text-primary">*</span>
+              </label>
+              <select
+                class="w-full h-12 px-4 rounded-lg bg-surface-container-low text-on-surface font-body-md text-sm sm:text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary border border-surface-container transition-all cursor-pointer"
+                id="prefTime"
+                required
+              >
+                <option disabled selected value="">Selecciona una franja</option>
+                <option value="Mañana (07:30 a 11:00)">Mañana (07:30 a 11:00)</option>
+                <option value="Mediodía (11:00 a 14:00)">Mediodía (11:00 a 14:00)</option>
+                <option value="Tarde temprana (14:00 a 17:00)">Tarde temprana (14:00 a 17:00)</option>
+                <option value="Tarde-Noche (17:00 a 19:30)">Tarde-Noche (17:00 a 19:30)</option>
+                <option value="Sábados por la mañana (08:00 a 13:00)">Sábados por la mañana (08:00 a 13:00)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label class="font-label-sm text-xs sm:text-label-sm text-on-surface font-semibold" for="patientNotes">
+              Detalle de la molestia o diagnóstico previo (Opcional)
+            </label>
+            <textarea
+              class="w-full p-4 rounded-lg bg-surface-container-low text-on-surface font-body-md text-sm sm:text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary border border-surface-container transition-all"
+              id="patientNotes"
+              placeholder="Cuéntanos brevemente cuándo empezó el dolor o si tienes radiografías/resonancias previas..."
+              rows="3"
+            ></textarea>
+          </div>
+
+          <button
+            class="w-full h-14 mt-1 rounded-xl bg-primary hover:bg-secondary text-on-primary font-label-lg text-label-lg font-bold flex items-center justify-center gap-3 shadow-md hover:-translate-y-0.5 transition-all cursor-pointer"
+            type="submit"
+            id="submitBookingBtn"
+          >
+            <Icon name="send" size={22} />
+            Enviar solicitud por WhatsApp
+          </button>
+
+          <div class="flex items-center gap-2 text-outline font-label-sm text-[11px] sm:text-xs justify-center text-center">
+            <span class="text-outline shrink-0"><Icon name="lock" size={16} /></span>
+            <span>Tus datos no requieren pago anticipado. Coordinaremos día y hora exacta de inmediato por WhatsApp.</span>
+          </div>
+        </form>
+      </div>
+
+      <!-- Información de Contacto Directo Lateral -->
+      <div class="lg:col-span-5 flex flex-col gap-6 sm:gap-8">
+        <div class="p-6 sm:p-8 rounded-3xl bg-surface-container-highest/15 backdrop-blur-sm flex flex-col gap-6 border border-white/10">
+          <h3 class="font-headline-sm text-headline-sm text-white font-bold">Canales de Atención Directa</h3>
+          
+          <div class="flex flex-col gap-5">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center shrink-0">
+                <Icon name="call" size={20} />
+              </div>
+              <div>
+                <p class="font-label-sm text-xs text-surface-dim uppercase">Teléfono y WhatsApp</p>
+                <p class="font-body-lg text-base sm:text-body-lg text-white font-semibold">{clinicaData.telefono}</p>
+                <p class="font-label-sm text-xs text-surface-dim">Línea fija: {clinicaData.telefonoFijo}</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center shrink-0">
+                <Icon name="pin_drop" size={20} />
+              </div>
+              <div>
+                <p class="font-label-sm text-xs text-surface-dim uppercase">Ubicación de la Sede</p>
+                <p class="font-body-md text-sm sm:text-body-md text-white font-medium">{clinicaData.direccion}</p>
+                <p class="font-label-sm text-xs text-surface-dim">{clinicaData.ciudad}, Azuay</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center shrink-0">
+                <Icon name="schedule" size={20} />
+              </div>
+              <div>
+                <p class="font-label-sm text-xs text-surface-dim uppercase">Horarios de Consulta</p>
+                <p class="font-body-md text-sm sm:text-body-md text-white font-medium">Lun – Vie: 07:30 a 19:30</p>
+                <p class="font-body-md text-sm sm:text-body-md text-white font-medium">Sábados: 08:00 a 13:00</p>
+                <p class="font-label-sm text-xs text-surface-dim">Domingos y feriados: Previa cita prioritaria</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-surface-container-highest/20 flex items-center gap-3">
+            <span class="text-tertiary-fixed shrink-0"><Icon name="local_parking" size={24} /></span>
+            <p class="font-body-sm text-xs sm:text-body-sm text-surface-dim leading-snug">
+              Estacionamiento accesible y parada de transporte a pocos metros de la clínica.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-5 sm:p-6 rounded-2xl bg-surface-container-highest/10 flex items-center gap-4 border border-white/5">
+          <span class="text-tertiary-fixed shrink-0"><Icon name="health_and_safety" size={32} /></span>
+          <div>
+            <p class="font-headline-sm text-label-lg text-white font-bold">Protocolo Bioseguro</p>
+            <p class="font-body-sm text-xs sm:text-body-sm text-surface-dim">Desinfección estricta de camillas y material terapéutico tras cada paciente.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Inicialización del formulario y límite de fecha mínima
+  const dateInput = document.getElementById('prefDate') as HTMLInputElement | null;
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+  }
+
+  const form = document.getElementById('appointmentForm') as HTMLFormElement | null;
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nameInput = document.getElementById('patientName') as HTMLInputElement | null;
+      const phoneInput = document.getElementById('patientPhone') as HTMLInputElement | null;
+      const treatmentSelect = document.getElementById('treatmentSelect') as HTMLSelectElement | null;
+      const dateEl = document.getElementById('prefDate') as HTMLInputElement | null;
+      const timeSelect = document.getElementById('prefTime') as HTMLSelectElement | null;
+      const notesEl = document.getElementById('patientNotes') as HTMLTextAreaElement | null;
+      const whatsappNumber = form.getAttribute('data-whatsapp-number') || '593990000000';
+
+      const name = nameInput?.value.trim() || '';
+      const phone = phoneInput?.value.trim() || '';
+      const treatment = treatmentSelect?.value || '';
+      const date = dateEl?.value || '';
+      const time = timeSelect?.value || '';
+      const notes = notesEl?.value.trim() || '';
+
+      if (!name || !phone || !treatment || !date || !time) {
+        alert('Por favor completa todos los campos requeridos (*)');
+        return;
+      }
+
+      let message = `Hola Physio Partner El Tejar,\n\nSolicito coordinar una cita de fisioterapia con los siguientes datos:\n`;
+      message += `• Paciente: ${name}\n`;
+      message += `• Teléfono de contacto: ${phone}\n`;
+      message += `• Tratamiento: ${treatment}\n`;
+      message += `• Fecha deseada: ${date}\n`;
+      message += `• Franja horaria: ${time}\n`;
+      if (notes) {
+        message += `• Detalle adicional: ${notes}\n`;
+      }
+      message += `\n¿Tienen disponibilidad en este horario? Muchas gracias.`;
+
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+      // Abre WhatsApp directamente en pestaña nueva
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    });
+  }
+</script>

@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import Treatments from '../components/Treatments.astro';
+import About from '../components/About.astro';
+import Process from '../components/Process.astro';
+import Team from '../components/Team.astro';
+import Reviews from '../components/Reviews.astro';
+import BookingForm from '../components/BookingForm.astro';
+import Faq from '../components/Faq.astro';
+import Location from '../components/Location.astro';
+import DemoNotice from '../components/DemoNotice.astro';
+import clinicaData from '../data/taller';
+---
+
+<Layout
+  title={`${clinicaData.nombre} | Fisioterapia & Rehabilitación Integral Cuenca`}
+  description={clinicaData.descripcion}
+>
+  <Hero />
+  <TrustStrip />
+  <Treatments />
+  <About />
+  <Process />
+  <Team />
+  <Reviews />
+  <BookingForm />
+  <Faq />
+  <Location />
+  <DemoNotice />
+</Layout>

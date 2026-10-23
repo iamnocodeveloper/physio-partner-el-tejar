@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import clinicaData from '../data/taller';
+import Icon from '../components/Icon.astro';
+---
+
+<Layout
+  title={`Página no encontrada | ${clinicaData.nombre}`}
+  description="La página que estás buscando no existe o ha sido movida."
+>
+  <div class="max-w-2xl mx-auto px-6 py-24 sm:py-32 text-center flex flex-col items-center gap-6">
+    <div class="w-20 h-20 rounded-3xl bg-secondary-container/60 text-secondary flex items-center justify-center">
+      <Icon name="healing" size={40} />
+    </div>
+    <span class="font-display-hero text-6xl text-primary font-extrabold">404</span>
+    <h1 class="font-headline-lg text-2xl sm:text-3xl font-bold text-on-surface">Página no encontrada</h1>
+    <p class="font-body-lg text-on-surface-variant max-w-md">
+      Lo sentimos, la dirección a la que intentas acceder no está disponible o ha cambiado de ubicación.
+    </p>
+    <a
+      href="/#inicio"
+      class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-on-primary font-bold text-label-lg shadow-md hover:bg-secondary transition-all"
+    >
+      <Icon name="home" size={20} />
+      Volver al inicio
+    </a>
+  </div>
+</Layout>

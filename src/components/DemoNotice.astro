@@ -1,0 +1,21 @@
+---
+import clinicaData from '../data/taller';
+import Icon from './Icon.astro';
+---
+
+<section class="w-full py-6 sm:py-8 bg-surface-container text-on-surface-variant border-t border-b border-surface-container-high" aria-label="Aviso informativo">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+    <div class="flex items-start sm:items-center gap-3">
+      <span class="text-primary mt-0.5 sm:mt-0 shrink-0"><Icon name="info" size={24} /></span>
+      <p class="font-body-sm text-xs sm:text-body-sm text-on-surface-variant leading-relaxed">
+        <strong class="text-on-surface font-semibold">Aviso de demostración:</strong> Los números telefónicos, horarios de turno, tarifas y testimonios mostrados en esta vista previa son datos referenciales diseñados para la maqueta funcional de {clinicaData.nombre} en Cuenca, Ecuador.
+      </p>
+    </div>
+    <a
+      href="#agenda"
+      class="shrink-0 px-4 py-2 rounded-lg bg-surface-container-lowest font-label-sm text-xs sm:text-label-sm text-primary font-bold hover:bg-surface-container-high transition-colors shadow-sm"
+    >
+      Agendar valoración
+    </a>
+  </div>
+</section>

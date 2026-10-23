@@ -1,0 +1,37 @@
+---
+import '../styles/global.css';
+import SeoHead from '../components/SeoHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileBottomBar from '../components/MobileBottomBar.astro';
+import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
+const { title, description, canonical, ogImage } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <SeoHead title={title} description={description} canonical={canonical} ogImage={ogImage} />
+    
+    <!-- Preload fuentes locales críticas para evitar Flash of Unstyled Text y acelerar PageSpeed -->
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  </head>
+  <body class="bg-surface font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-container relative">
+    <Header />
+    <main id="contenido-principal" class="w-full pt-16 lg:pt-20 bg-surface min-h-screen">
+      <slot />
+    </main>
+    <FloatingWhatsApp />
+    <MobileBottomBar />
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,98 @@
+---
+import clinicaData from '../data/taller';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  type?: string;
+}
+
+const {
+  title = `${clinicaData.nombre} | Fisioterapia & Rehabilitación Integral Cuenca`,
+  description = clinicaData.descripcion,
+  canonical = clinicaData.dominio,
+  ogImage = `${clinicaData.dominio}/fotos/hero-fisioterapia.jpg`,
+  type = 'website',
+} = Astro.props;
+
+// Schema JSON-LD estructurado
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['MedicalBusiness', 'Physiotherapy', 'LocalBusiness'],
+  name: clinicaData.nombre,
+  alternateName: 'Physio Partner El Tejar',
+  description: clinicaData.descripcion,
+  url: clinicaData.dominio,
+  logo: `${clinicaData.dominio}/fotos/logo.png`,
+  image: ogImage,
+  telephone: clinicaData.telefonoLlamada,
+  email: clinicaData.email,
+  priceRange: '$$',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Av. del Tejar, 010111',
+    addressLocality: clinicaData.ciudad,
+    addressRegion: clinicaData.provincia,
+    postalCode: clinicaData.codigoPostal,
+    addressCountry: 'EC'
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: clinicaData.coordenadas.lat,
+    longitude: clinicaData.coordenadas.lng
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '07:30',
+      closes: '19:30'
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Saturday'],
+      opens: '08:00',
+      closes: '13:00'
+    }
+  ],
+  hasMap: clinicaData.googleMapsUrl,
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: clinicaData.ratingGoogle,
+    reviewCount: clinicaData.totalOpiniones,
+    bestRating: '5',
+    worstRating: '1'
+  }
+};
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#00685a" />
+<link rel="canonical" href={canonical} />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content={clinicaData.nombre} />
+<meta property="og:locale" content="es_EC" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- Schema JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

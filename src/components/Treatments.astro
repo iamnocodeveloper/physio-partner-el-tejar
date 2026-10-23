@@ -1,0 +1,129 @@
+---
+import clinicaData from '../data/taller';
+import Icon from './Icon.astro';
+---
+
+<section class="w-full py-12 sm:py-20 bg-surface" id="tratamientos">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex flex-col gap-8 sm:gap-12">
+    <!-- Encabezado de Sección -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div class="flex flex-col gap-2 max-w-2xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/60 text-secondary font-label-sm text-label-sm w-fit uppercase tracking-widest font-bold">
+          01 / TRATAMIENTOS
+        </div>
+        <h2 class="font-headline-lg text-[26px] leading-[32px] sm:text-headline-lg-mobile lg:text-headline-lg text-on-surface font-bold">
+          SOLUCIONES PARA VOLVER A MOVERTE CON CONFIANZA
+        </h2>
+        <p class="font-body-md sm:font-body-lg text-body-md sm:text-body-lg text-on-surface-variant">
+          Conoce nuestros servicios de fisioterapia y rehabilitación, diseñados para responder a diferentes necesidades de recuperación y movimiento muscular.
+        </p>
+      </div>
+      <p class="font-label-sm text-xs text-outline max-w-xs text-left md:text-right">
+        * Precios y duraciones referenciales para fines informativos en Cuenca, Ecuador.
+      </p>
+    </div>
+
+    <!-- Grid de 8 Tratamientos -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      {clinicaData.servicios.map((servicio) => (
+        <div class="group bg-surface-container-lowest p-5 sm:p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between border border-surface-container">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-surface-container-high text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors">
+                <Icon name={servicio.icono} size={24} />
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-xs text-on-surface-variant font-medium">
+                {servicio.duracion}
+              </span>
+            </div>
+
+            <h3 class="font-headline-sm text-[18px] sm:text-headline-sm text-on-surface mb-2 font-bold">
+              {servicio.titulo}
+            </h3>
+            <p class="font-body-sm text-xs sm:text-body-sm text-on-surface-variant leading-relaxed mb-4">
+              {servicio.descripcion}
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-surface-container flex items-center justify-between gap-2">
+            <div>
+              <span class="font-label-sm text-[11px] text-outline block">Tarifa estimada</span>
+              <span class="font-headline-sm text-[18px] sm:text-headline-sm text-primary font-bold">
+                ${servicio.precio} <span class="text-xs font-normal text-on-surface-variant">ref./sesión</span>
+              </span>
+            </div>
+            
+            <!-- Botón Pedir Cita que preselecciona el servicio en el formulario -->
+            <button
+              type="button"
+              class="service-book-btn px-3.5 py-2 rounded-lg bg-surface-container-low hover:bg-primary hover:text-on-primary text-primary transition-colors inline-flex items-center gap-1.5 font-label-sm text-xs font-semibold cursor-pointer"
+              data-treatment-title={servicio.titulo}
+              aria-label={`Pedir cita para ${servicio.titulo}`}
+            >
+              <Icon name="calendar_month" size={16} />
+              Pedir cita
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Banner Inferior de Consulta Médica -->
+    <div class="p-5 sm:p-6 rounded-2xl bg-surface-container-low text-center flex flex-col sm:flex-row items-center justify-between gap-4 border border-surface-container">
+      <div class="flex items-start sm:items-center gap-3 text-left">
+        <span class="text-primary mt-0.5 sm:mt-0"><Icon name="contact_support" size={28} /></span>
+        <div>
+          <p class="font-headline-sm text-label-md sm:text-label-lg text-on-surface font-bold">¿Tienes una orden médica o lesión específica?</p>
+          <p class="font-body-sm text-xs sm:text-body-sm text-on-surface-variant">Podemos evaluar tus requerimientos y diseñar un esquema de recuperación a tu medida.</p>
+        </div>
+      </div>
+      <a
+        href="#agenda"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-on-primary font-bold text-label-sm sm:text-label-lg hover:bg-secondary transition-all text-center"
+      >
+        Solicitar valoración inicial
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Al pulsar "Pedir cita" en una tarjeta de servicio, hace scroll al formulario y selecciona ese servicio
+  const buttons = document.querySelectorAll('.service-book-btn');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const treatmentTitle = btn.getAttribute('data-treatment-title');
+      const selectEl = document.getElementById('treatmentSelect') as HTMLSelectElement | null;
+      const formSection = document.getElementById('agenda');
+
+      if (selectEl && treatmentTitle) {
+        // Buscar la opción cuyo valor coincida con el título del tratamiento
+        let found = false;
+        for (let i = 0; i < selectEl.options.length; i++) {
+          if (selectEl.options[i].value === treatmentTitle) {
+            selectEl.selectedIndex = i;
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          // Si no coincide exactamente, seleccionar por inclusión
+          for (let i = 0; i < selectEl.options.length; i++) {
+            if (selectEl.options[i].text.includes(treatmentTitle)) {
+              selectEl.selectedIndex = i;
+              break;
+            }
+          }
+        }
+      }
+
+      if (formSection) {
+        formSection.scrollIntoView({ behavior: 'smooth' });
+        // Foco visual en el input de nombre
+        setTimeout(() => {
+          document.getElementById('patientName')?.focus();
+        }, 500);
+      }
+    });
+  });
+</script>

@@ -1,0 +1,51 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import clinicaData from '../data/taller';
+---
+
+<LegalLayout
+  title="Política de Privacidad"
+  description={`Política de privacidad y protección de datos personales de ${clinicaData.nombre}`}
+>
+  <div class="space-y-6">
+    <section>
+      <h2 class="text-xl font-bold text-on-surface mb-2">1. Responsable del Tratamiento de Datos</h2>
+      <p>
+        El responsable del tratamiento de los datos que voluntariamente facilite es <strong>{clinicaData.razonSocial}</strong>, con domicilio en {clinicaData.direccion}, y correo electrónico de contacto {clinicaData.email}.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-on-surface mb-2">2. Ausencia de Almacenamiento Web / Tratamiento Local</h2>
+      <p>
+        Este sitio web está construido con una arquitectura estática sin base de datos en servidor. El formulario de contacto «Pide tu cita» no recopila, almacena ni transmite sus datos a ningún servidor web centralizado. Al enviar el formulario, los datos ingresados se formatean exclusivamente en su propio navegador para iniciar una conversación directa en la aplicación oficial de WhatsApp con nuestra sede clínica.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-on-surface mb-2">3. Finalidad del Tratamiento de Contacto</h2>
+      <p>
+        La información facilitada al escribirnos por WhatsApp o vía telefónica se destina únicamente a:
+      </p>
+      <ul class="list-disc pl-5 mt-2 space-y-1">
+        <li>Coordinar y agendar su turno de valoración o sesión de fisioterapia.</li>
+        <li>Resolver consultas directas sobre nuestros servicios terapéuticos y tarifas.</li>
+        <li>Proporcionar indicaciones de llegada y preparación previa a su consulta.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-on-surface mb-2">4. Confidencialidad y Secreto Profesional</h2>
+      <p>
+        Cualquier antecedente de salud o motivo de consulta compartido en el marco de la atención médica queda amparado bajo el más riguroso secreto profesional y las directrices de la Ley Orgánica de Protección de Datos Personales del Ecuador.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-on-surface mb-2">5. Derechos del Usuario</h2>
+      <p>
+        Usted puede ejercer en cualquier momento sus derechos de acceso, rectificación, cancelación y oposición respecto a sus datos de contacto comunicándose a través de nuestro correo electrónico oficial: <strong>{clinicaData.email}</strong> o acudiendo a nuestras instalaciones en {clinicaData.direccionCorta}.
+      </p>
+    </section>
+  </div>
+</LegalLayout>

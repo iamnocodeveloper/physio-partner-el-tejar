@@ -1,0 +1,97 @@
+---
+import clinicaData from '../data/taller';
+import Icon from './Icon.astro';
+import OpenStatusBadge from './OpenStatusBadge.astro';
+
+const whatsappHeroUrl = `https://wa.me/${clinicaData.whatsapp}?text=${encodeURIComponent(clinicaData.whatsappMensajeDefault)}`;
+---
+
+<section class="relative w-full overflow-hidden bg-surface py-8 sm:py-12 lg:py-20" id="inicio">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
+      <!-- Columna Izquierda: Mensaje y Acciones -->
+      <div class="lg:col-span-7 flex flex-col items-start gap-4 sm:gap-6 z-10">
+        <!-- Indicador de Apertura / Tagline -->
+        <OpenStatusBadge />
+
+        <h1 class="font-display-hero text-[30px] leading-[36px] sm:text-display-hero-mobile lg:text-display-hero text-on-surface tracking-tight text-balance font-extrabold">
+          RECUPERA TU MOVIMIENTO. <span class="text-primary block sm:inline">VUELVE A SENTIRTE BIEN.</span>
+        </h1>
+
+        <p class="font-body-md sm:font-body-lg text-body-md sm:text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+          {clinicaData.descripcion}
+        </p>
+
+        <!-- Botones de Acción -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1 w-full sm:w-auto">
+          <a
+            href={whatsappHeroUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-primary text-on-primary font-bold text-label-lg shadow-md hover:bg-secondary hover:-translate-y-0.5 transition-all text-center"
+          >
+            <Icon name="chat" size={20} />
+            Agendar cita por WhatsApp
+          </a>
+
+          <a
+            href="#tratamientos"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-surface-container-lowest text-primary font-semibold text-label-lg hover:bg-surface-container transition-all shadow-sm text-center border border-outline-variant/30"
+          >
+            Explorar tratamientos
+            <Icon name="arrow_forward" size={18} />
+          </a>
+        </div>
+
+        <!-- Franja de Métricas Rápidas / Prueba Social -->
+        <div class="w-full pt-4 sm:pt-6 border-t border-outline-variant/30 flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-2.5 lg:gap-4 text-on-surface-variant font-label-sm text-xs sm:text-label-md">
+          <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full w-full sm:w-auto">
+            <span class="text-primary"><Icon name="verified" size={18} /></span>
+            <span>+10 años de experiencia referencial</span>
+          </div>
+
+          <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full w-full sm:w-auto">
+            <span class="text-amber-500"><Icon name="star" size={18} filled={true} /></span>
+            <span class="font-semibold text-on-surface">{clinicaData.ratingGoogle}/5</span>
+            <span>en Google ({clinicaData.totalOpiniones} opiniones)</span>
+          </div>
+
+          <div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full w-full sm:w-auto">
+            <span class="text-primary"><Icon name="location_on" size={18} /></span>
+            <span>{clinicaData.direccionCorta}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Composición Visual Principal -->
+      <div class="lg:col-span-5 relative flex justify-center lg:justify-end w-full">
+        <div class="relative w-full max-w-md lg:max-w-none">
+          <!-- Halo terapéutico posterior -->
+          <div class="absolute -inset-2 sm:-inset-4 bg-gradient-to-tr from-secondary-container/40 to-tertiary-fixed/30 rounded-3xl blur-2xl -z-10"></div>
+          
+          <div class="relative rounded-3xl overflow-hidden shadow-xl bg-surface-container-lowest">
+            <img
+              src="/fotos/hero-fisioterapia.jpg"
+              alt="Atención fisioterapéutica personalizada en Physio Partner El Tejar"
+              class="w-full h-[320px] sm:h-[460px] lg:h-[520px] object-cover object-center"
+              width="520"
+              height="520"
+              loading="eager"
+            />
+            
+            <!-- Floating Badge Overlay -->
+            <div class="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 p-3 sm:p-4 rounded-2xl bg-surface-container-lowest/95 backdrop-blur-md shadow-lg flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center shrink-0">
+                <Icon name="healing" size={22} />
+              </div>
+              <div>
+                <p class="font-headline-sm text-label-md sm:text-label-lg text-on-surface leading-tight font-bold">Atención personalizada</p>
+                <p class="font-body-sm text-[11px] sm:text-body-sm text-on-surface-variant leading-snug">Cada sesión guiada por un plan de recuperación individual</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

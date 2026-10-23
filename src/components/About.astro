@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+---
+
+<section class="w-full py-12 sm:py-20 bg-surface-container-low" id="nosotros">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+      <!-- Imagen de Instalaciones Reales -->
+      <div class="lg:col-span-6 relative">
+        <div class="relative rounded-3xl overflow-hidden shadow-xl bg-surface-container-lowest">
+          <img
+            src="/fotos/instalaciones.jpg"
+            alt="Instalaciones del centro Physio Partner El Tejar Cuenca"
+            class="w-full h-[280px] sm:h-[480px] object-cover object-center"
+            width="600"
+            height="480"
+            loading="lazy"
+          />
+          <div class="absolute top-3 left-3 sm:top-6 sm:left-6 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-inverse-surface/85 backdrop-blur-sm text-white font-label-sm text-xs sm:text-label-sm flex items-center gap-1.5">
+            <span class="text-tertiary-fixed"><Icon name="verified" size={18} /></span>
+            <span>Instalaciones confortables y seguras en Cuenca</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texto y Estadísticas de Confianza -->
+      <div class="lg:col-span-6 flex flex-col items-start gap-4 sm:gap-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/60 text-secondary font-label-sm text-label-sm uppercase tracking-widest font-bold">
+          02 / NOSOTROS
+        </div>
+        <h2 class="font-headline-lg text-[26px] leading-[32px] sm:text-headline-lg-mobile lg:text-headline-lg text-on-surface font-bold">
+          TU BIENESTAR ES NUESTRA PRIORIDAD
+        </h2>
+        <p class="font-body-md sm:font-body-lg text-body-md sm:text-body-lg text-on-surface-variant leading-relaxed">
+          En PHYSIO PARTNER creemos en la rehabilitación con sentido humano. No tratamos simplemente síntomas aislados; entendemos a la persona, sus hábitos diarios, sus objetivos deportivos y sus necesidades de movilidad funcional para brindarle una atención que realmente transforme su calidad de vida.
+        </p>
+        <p class="font-body-sm sm:font-body-md text-body-sm sm:text-body-md text-on-surface-variant leading-relaxed">
+          Nuestras instalaciones en el sector El Tejar cuentan con equipamiento moderno, boxes de terapia manual y un área de readaptación con luz natural para que cada sesión se desarrolle en un clima de serenidad, profesionalismo y confianza clínica.
+        </p>
+
+        <!-- 3 Stats Counters -->
+        <div class="grid grid-cols-3 gap-2.5 sm:gap-4 w-full pt-2">
+          <div class="p-3 sm:p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col text-center sm:text-left border border-surface-container">
+            <span class="font-headline-lg text-[22px] sm:text-headline-md lg:text-headline-lg text-primary font-bold">+10</span>
+            <span class="font-label-sm text-[11px] sm:text-label-sm text-on-surface-variant mt-0.5">Años de experiencia</span>
+          </div>
+          <div class="p-3 sm:p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col text-center sm:text-left border border-surface-container">
+            <span class="font-headline-lg text-[22px] sm:text-headline-md lg:text-headline-lg text-primary font-bold">+2.5k</span>
+            <span class="font-label-sm text-[11px] sm:text-label-sm text-on-surface-variant mt-0.5">Pacientes atendidos</span>
+          </div>
+          <div class="p-3 sm:p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col text-center sm:text-left border border-surface-container">
+            <span class="font-headline-lg text-[22px] sm:text-headline-md lg:text-headline-lg text-primary font-bold">8</span>
+            <span class="font-label-sm text-[11px] sm:text-label-sm text-on-surface-variant mt-0.5">Áreas de especialidad</span>
+          </div>
+        </div>
+
+        <div class="pt-1 w-full sm:w-auto">
+          <a
+            href="#tratamientos"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-on-primary font-bold text-label-lg hover:bg-secondary transition-all text-center"
+          >
+            Conoce nuestros tratamientos
+            <Icon name="arrow_downward" size={18} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

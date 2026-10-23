@@ -1,0 +1,94 @@
+---
+import clinicaData from '../data/taller';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div
+  id="openStatusBadge"
+  class={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${className} bg-surface-container-high text-primary`}
+  data-horarios={JSON.stringify(clinicaData.horarios)}
+  data-timezone={clinicaData.zonaHoraria}
+>
+  <span id="openStatusDot" class="w-2 h-2 rounded-full bg-primary animate-pulse shrink-0"></span>
+  <span id="openStatusText">{clinicaData.tagline}</span>
+</div>
+
+<script>
+  function updateOpenStatus() {
+    const badge = document.getElementById('openStatusBadge');
+    const textEl = document.getElementById('openStatusText');
+    const dotEl = document.getElementById('openStatusDot');
+    if (!badge || !textEl || !dotEl) return;
+
+    try {
+      const rawHorarios = badge.getAttribute('data-horarios');
+      const timeZone = badge.getAttribute('data-timezone') || 'America/Guayaquil';
+      if (!rawHorarios) return;
+
+      const horarios = JSON.parse(rawHorarios);
+
+      // Obtener hora actual en la zona horaria del negocio
+      const now = new Date();
+      const localDateStr = now.toLocaleString('en-US', { timeZone });
+      const localDate = new Date(localDateStr);
+
+      const dayOfWeek = localDate.getDay(); // 0 = Domingo, 1 = Lunes, ..., 6 = Sábado
+      const currentHours = localDate.getHours();
+      const currentMinutes = localDate.getMinutes();
+      const currentTimeVal = currentHours * 60 + currentMinutes;
+
+      // Buscar configuración del día de hoy
+      const scheduleToday = horarios.find((h: any) => h.dias && h.dias.includes(dayOfWeek));
+
+      let isOpen = false;
+      let closeTime = '';
+
+      if (scheduleToday && !scheduleToday.cerrado) {
+        const [openH, openM] = scheduleToday.apertura.split(':').map(Number);
+        const [closeH, closeM] = scheduleToday.cierre.split(':').map(Number);
+        const openVal = openH * 60 + openM;
+        const closeVal = closeH * 60 + closeM;
+
+        if (currentTimeVal >= openVal && currentTimeVal < closeVal) {
+          isOpen = true;
+          closeTime = scheduleToday.cierre;
+        }
+      }
+
+      if (isOpen) {
+        dotEl.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0';
+        textEl.textContent = `Abierto ahora · Cierra a las ${closeTime}`;
+        badge.className = badge.className.replace(/bg-[^ ]+/g, '').replace(/text-[^ ]+/g, '');
+        badge.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200');
+      } else {
+        // Buscar el próximo día y hora de apertura
+        let nextOpenStr = 'lunes a las 07:30';
+        for (let i = 1; i <= 7; i++) {
+          const nextDay = (dayOfWeek + i) % 7;
+          const nextSched = horarios.find((h: any) => h.dias && h.dias.includes(nextDay));
+          if (nextSched && !nextSched.cerrado) {
+            const dayNames = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+            const targetName = i === 1 ? 'mañana' : dayNames[nextDay];
+            nextOpenStr = `${targetName} a las ${nextSched.apertura}`;
+            break;
+          }
+        }
+
+        dotEl.className = 'w-2 h-2 rounded-full bg-amber-500 shrink-0';
+        textEl.textContent = `Cerrado · Abre el ${nextOpenStr}`;
+        badge.className = badge.className.replace(/bg-[^ ]+/g, '').replace(/text-[^ ]+/g, '');
+        badge.classList.add('bg-amber-50', 'text-amber-900', 'border', 'border-amber-200');
+      }
+    } catch (e) {
+      console.error('Error calculando horario', e);
+    }
+  }
+
+  // Ejecutar inmediatamente
+  updateOpenStatus();
+</script>

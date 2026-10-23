@@ -1,0 +1,62 @@
+---
+import clinicaData from '../data/taller';
+import Icon from './Icon.astro';
+---
+
+<section class="w-full py-12 sm:py-20 bg-surface" id="proceso">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex flex-col gap-10 sm:gap-16">
+    <div class="text-center max-w-2xl mx-auto flex flex-col items-center gap-2">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/60 text-secondary font-label-sm text-label-sm uppercase tracking-widest font-bold">
+        03 / TU RECUPERACIÓN
+      </div>
+      <h2 class="font-headline-lg text-[26px] leading-[32px] sm:text-headline-lg-mobile lg:text-headline-lg text-on-surface font-bold">
+        TRES PASOS PARA EMPEZAR A SENTIRTE MEJOR
+      </h2>
+      <p class="font-body-md sm:font-body-lg text-body-md sm:text-body-lg text-on-surface-variant">
+        Un proceso ágil, transparente y centrado en devolverte la autonomía física en cada fase.
+      </p>
+    </div>
+
+    <!-- Rejilla de 3 Pasos Secuenciales -->
+    <div class="relative grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
+      {clinicaData.pasosProceso.map((paso, idx) => (
+        <div class="relative bg-surface-container-lowest p-6 sm:p-8 rounded-3xl shadow-sm hover:shadow-md transition-all flex flex-col items-start gap-3 sm:gap-4 border border-surface-container">
+          <div class="flex items-center justify-between w-full">
+            <span class={`w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center font-headline-sm text-headline-sm font-bold ${
+              idx === 0 ? 'bg-surface-container-high text-primary' : idx === 1 ? 'bg-secondary-container text-secondary' : 'bg-primary text-on-primary'
+            }`}>
+              {paso.numero}
+            </span>
+            <span class={idx === 1 ? 'text-secondary' : 'text-primary'}>
+              <Icon name={paso.icono} size={28} />
+            </span>
+          </div>
+
+          <h3 class="font-headline-sm text-[18px] sm:text-headline-sm text-on-surface font-bold">
+            {paso.titulo}
+          </h3>
+          <p class="font-body-sm sm:font-body-md text-on-surface-variant leading-relaxed">
+            {paso.descripcion}
+          </p>
+
+          <div class={`mt-auto pt-3 font-label-sm text-xs sm:text-label-sm flex items-center gap-1 font-semibold ${
+            idx === 1 ? 'text-secondary' : 'text-primary'
+          }`}>
+            <span>{paso.destacado}</span>
+            <Icon name="check_circle" size={16} />
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="flex justify-center w-full">
+      <a
+        href="#agenda"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-primary text-on-primary font-bold text-label-lg shadow-md hover:bg-secondary hover:-translate-y-0.5 transition-all text-center"
+      >
+        <Icon name="calendar_today" size={20} />
+        Quiero agendar mi cita
+      </a>
+    </div>
+  </div>
+</section>

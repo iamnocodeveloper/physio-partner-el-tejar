@@ -1,0 +1,156 @@
+---
+import clinicaData from '../data/taller';
+import Icon from './Icon.astro';
+
+const navItems = [
+  { label: 'Inicio', href: '#inicio' },
+  { label: 'Tratamientos', href: '#tratamientos' },
+  { label: 'Nosotros', href: '#nosotros' },
+  { label: 'Cómo Trabajamos', href: '#proceso' },
+  { label: 'Equipo', href: '#equipo' },
+  { label: 'Opiniones', href: '#opiniones' },
+  { label: 'FAQ', href: '#faq' },
+  { label: 'Ubicación', href: '#ubicacion' },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-all">
+  <div class="h-16 lg:h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between gap-3">
+    <!-- Logo y Nombre de Marca -->
+    <div class="flex items-center gap-2.5 shrink-0">
+      <a href="#inicio" class="flex items-center gap-2.5 focus:outline-none focus:ring-2 focus:ring-primary rounded-lg" aria-label="Ir al inicio de Physio Partner El Tejar">
+        <img
+          src="/fotos/logo.png"
+          alt="Physio Partner El Tejar Logo"
+          class="h-7 sm:h-8 w-auto object-contain"
+          width="32"
+          height="32"
+        />
+        <div class="flex flex-col">
+          <span class="font-headline-sm text-[16px] sm:text-headline-sm text-primary tracking-tight leading-none font-bold">
+            PHYSIO PARTNER
+          </span>
+          <span class="font-label-sm text-[10px] sm:text-label-sm text-outline tracking-wider uppercase leading-tight">
+            {clinicaData.subtitulo}
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Navegación Principal Escritorio -->
+    <nav class="hidden xl:flex items-center gap-6" aria-label="Navegación principal">
+      {navItems.map((item, idx) => (
+        <a
+          href={item.href}
+          class={`font-label-lg text-label-lg transition-colors duration-150 ${idx === 0 ? 'text-primary font-bold' : 'text-on-surface-variant hover:text-primary'}`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Botones de Acción Derecha -->
+    <div class="flex items-center gap-2 sm:gap-4 shrink-0">
+      <!-- Botón Llamar Escritorio -->
+      <a
+        href={`tel:${clinicaData.telefonoLlamada}`}
+        class="hidden md:flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group"
+        aria-label={`Llamar a ${clinicaData.nombre}`}
+      >
+        <div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-secondary-container transition-colors text-primary">
+          <Icon name="call" size={18} />
+        </div>
+        <div class="flex flex-col text-left">
+          <span class="font-label-sm text-[11px] text-outline leading-tight">{clinicaData.ciudad}</span>
+          <span class="font-label-lg text-[13px] font-semibold text-on-surface group-hover:text-primary leading-tight">{clinicaData.telefono}</span>
+        </div>
+      </a>
+
+      <!-- Botón Agendar Cita -->
+      <a
+        href="#agenda"
+        class="hidden sm:inline-flex items-center justify-center px-4 sm:px-5 py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-secondary transition-all duration-200 shadow-[0_2px_8px_rgba(0,104,90,0.18)] hover:shadow-none hover:-translate-y-0.5"
+      >
+        Agendar cita
+      </a>
+
+      <!-- Botón Hamburguesa Móvil -->
+      <button
+        type="button"
+        id="mobileMenuBtn"
+        class="xl:hidden w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary hover:bg-secondary-container transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+        aria-expanded="false"
+        aria-controls="mobileMenuDrawer"
+        aria-label="Abrir menú de navegación"
+      >
+        <span id="menuIconOpen"><Icon name="menu" size={24} /></span>
+        <span id="menuIconClose" class="hidden"><Icon name="close" size={24} /></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menú Desplegable Móvil -->
+  <div id="mobileMenuDrawer" class="hidden xl:hidden bg-surface-container-lowest border-b border-surface-container shadow-xl px-5 py-5 space-y-3">
+    <nav class="flex flex-col space-y-1.5" aria-label="Navegación móvil">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class="mobile-nav-link px-3.5 py-2.5 rounded-lg text-on-surface hover:bg-surface-container-low transition-colors flex items-center justify-between text-body-md font-medium"
+        >
+          <span>{item.label}</span>
+          <span class="text-outline"><Icon name="chevron_right" size={18} /></span>
+        </a>
+      ))}
+    </nav>
+    <div class="pt-3 border-t border-surface-container flex flex-col gap-2">
+      <a
+        href="#agenda"
+        class="mobile-nav-link w-full py-3 rounded-xl bg-primary text-on-primary font-bold text-center flex items-center justify-center gap-2 shadow-sm"
+      >
+        <Icon name="calendar_today" size={20} />
+        Solicitar Cita de Valoración
+      </a>
+      <a
+        href={`tel:${clinicaData.telefonoLlamada}`}
+        class="w-full py-2.5 rounded-xl bg-surface-container text-primary font-semibold text-center flex items-center justify-center gap-2"
+      >
+        <Icon name="call" size={18} />
+        Llamar: {clinicaData.telefono}
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobileMenuBtn');
+  const drawer = document.getElementById('mobileMenuDrawer');
+  const openIcon = document.getElementById('menuIconOpen');
+  const closeIcon = document.getElementById('menuIconClose');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+  if (btn && drawer) {
+    btn.addEventListener('click', () => {
+      const isHidden = drawer.classList.contains('hidden');
+      if (isHidden) {
+        drawer.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+        openIcon?.classList.add('hidden');
+        closeIcon?.classList.remove('hidden');
+      } else {
+        drawer.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+        openIcon?.classList.remove('hidden');
+        closeIcon?.classList.add('hidden');
+      }
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        drawer.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+        openIcon?.classList.remove('hidden');
+        closeIcon?.classList.add('hidden');
+      });
+    });
+  }
+</script>

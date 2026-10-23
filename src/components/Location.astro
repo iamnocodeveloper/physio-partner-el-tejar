@@ -1,0 +1,186 @@
+---
+import clinicaData from '../data/taller';
+import Icon from './Icon.astro';
+
+const whatsappLocationUrl = `https://wa.me/${clinicaData.whatsapp}?text=${encodeURIComponent('Hola Physio Partner, solicito ayuda para llegar a la sede El Tejar')}`;
+---
+
+<section class="w-full py-12 sm:py-20 bg-surface-container-low" id="ubicacion">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex flex-col gap-8 sm:gap-12">
+    <div class="flex flex-col gap-2">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container/60 text-secondary font-label-sm text-label-sm uppercase tracking-widest font-bold w-fit">
+        07 / ENCUÉNTRANOS
+      </div>
+      <h2 class="font-headline-lg text-[26px] leading-[32px] sm:text-headline-lg-mobile lg:text-headline-lg text-on-surface font-bold">
+        ESTAMOS EN CUENCA. TE ESPERAMOS.
+      </h2>
+      <p class="font-body-md sm:font-body-lg text-body-md sm:text-body-lg text-on-surface-variant max-w-2xl">
+        Instalaciones de fácil acceso pensadas para tu comodidad y bienestar durante cada sesión de recuperación.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+      <!-- Info de la Sede -->
+      <div class="lg:col-span-5 bg-surface-container-lowest p-6 sm:p-8 rounded-3xl shadow-sm flex flex-col justify-between gap-6 border border-surface-container">
+        <div class="flex flex-col gap-6">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-surface-container text-primary flex items-center justify-center shrink-0">
+              <Icon name="location_on" size={24} />
+            </div>
+            <div>
+              <h3 class="font-headline-sm text-lg sm:text-headline-sm text-on-surface font-bold">
+                {clinicaData.nombre}
+              </h3>
+              <p class="font-body-md text-sm sm:text-body-md text-on-surface-variant mt-0.5">
+                {clinicaData.direccion}
+              </p>
+              <p class="font-body-sm text-xs text-outline">
+                {clinicaData.ciudad}, {clinicaData.provincia}, {clinicaData.pais}
+              </p>
+            </div>
+          </div>
+
+          <!-- Horario Semanal Detallado -->
+          <div class="p-4 rounded-2xl bg-surface-container-low flex flex-col gap-2.5 border border-surface-container">
+            <span class="font-label-sm text-xs text-primary font-bold uppercase tracking-wider">
+              Horario Semanal de Atención
+            </span>
+            <div class="flex justify-between font-body-sm text-xs sm:text-body-sm text-on-surface">
+              <span>Lunes a Viernes:</span>
+              <span class="font-semibold text-primary">07:30 – 19:30</span>
+            </div>
+            <div class="flex justify-between font-body-sm text-xs sm:text-body-sm text-on-surface">
+              <span>Sábados:</span>
+              <span class="font-semibold text-primary">08:00 – 13:00</span>
+            </div>
+            <div class="flex justify-between font-body-sm text-xs sm:text-body-sm text-outline">
+              <span>Domingos y Feriados:</span>
+              <span>Previa Cita Prioritaria</span>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <span class="font-label-sm text-xs text-outline uppercase font-semibold">Referencias de llegada</span>
+            <p class="font-body-sm text-xs sm:text-body-sm text-on-surface-variant leading-relaxed">
+              {clinicaData.referencia}
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-surface-container">
+          <a
+            href={clinicaData.googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-primary text-on-primary font-label-lg text-sm sm:text-label-lg font-bold hover:bg-secondary transition-all text-center shadow-sm"
+          >
+            <Icon name="directions" size={18} />
+            Cómo llegar
+          </a>
+          <a
+            href={whatsappLocationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-surface-container-low text-primary font-label-lg text-sm sm:text-label-lg font-semibold hover:bg-surface-container transition-all text-center border border-surface-container"
+          >
+            <Icon name="chat" size={18} />
+            WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Render de Mapa con Carga Bajo Demanda (Facade Pattern para 100/100 PageSpeed) -->
+      <div
+        id="mapContainer"
+        class="lg:col-span-7 h-[340px] sm:h-[420px] rounded-3xl overflow-hidden shadow-sm relative bg-surface-container border border-surface-container group cursor-pointer"
+        data-maps-src="https://maps.google.com/maps?q=Av.+del+Tejar,+Cuenca,+Ecuador&t=&z=16&ie=UTF8&iwloc=&output=embed"
+      >
+        <!-- Imagen Estática y Pin Inicial -->
+        <div id="mapStaticFacade" class="w-full h-full relative">
+          <img
+            src="/fotos/mapa-estatico.jpg"
+            alt="Ubicación geográfica de Physio Partner El Tejar en Cuenca"
+            class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+            width="700"
+            height="420"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+
+          <!-- Pin Flotante Estilizado -->
+          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div class="flex flex-col items-center animate-bounce">
+              <div class="px-3.5 py-1.5 rounded-xl bg-primary text-on-primary font-label-sm text-xs shadow-xl flex items-center gap-2 font-bold">
+                <Icon name="healing" size={16} />
+                <span>Physio Partner El Tejar</span>
+              </div>
+              <div class="w-3 h-3 bg-primary rotate-45 -mt-1.5 shadow-md"></div>
+            </div>
+          </div>
+
+          <!-- Botón de apertura / activación en esquina -->
+          <div class="absolute bottom-4 left-4 right-4 sm:right-auto sm:left-4 flex flex-col sm:flex-row gap-2">
+            <button
+              type="button"
+              id="activateMapBtn"
+              class="px-4 py-2.5 rounded-xl bg-surface-container-lowest/95 backdrop-blur-md shadow-md text-on-surface font-label-sm text-xs font-semibold inline-flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-all cursor-pointer"
+            >
+              <Icon name="map" size={18} />
+              Cargar mapa interactivo
+            </button>
+            <a
+              href={clinicaData.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="px-4 py-2.5 rounded-xl bg-surface-container-lowest/95 backdrop-blur-md shadow-md text-on-surface font-label-sm text-xs font-semibold inline-flex items-center justify-center gap-2 hover:bg-surface-container-lowest transition-all"
+            >
+              Abrir en Google Maps app
+            </a>
+          </div>
+        </div>
+
+        <!-- Contenedor del Iframe Dinámico (se inserta al hacer click) -->
+        <div id="mapIframeWrapper" class="hidden w-full h-full"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const mapContainer = document.getElementById('mapContainer');
+  const activateBtn = document.getElementById('activateMapBtn');
+  const facade = document.getElementById('mapStaticFacade');
+  const iframeWrapper = document.getElementById('mapIframeWrapper');
+
+  function loadInteractiveMap() {
+    if (!mapContainer || !facade || !iframeWrapper) return;
+    const src = mapContainer.getAttribute('data-maps-src');
+    if (!src) return;
+
+    iframeWrapper.innerHTML = `
+      <iframe
+        src="${src}"
+        width="100%"
+        height="100%"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Mapa interactivo de Google Maps Physio Partner El Tejar"
+      ></iframe>
+    `;
+    facade.classList.add('hidden');
+    iframeWrapper.classList.remove('hidden');
+  }
+
+  activateBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    loadInteractiveMap();
+  });
+
+  mapContainer?.addEventListener('click', () => {
+    if (facade && !facade.classList.contains('hidden')) {
+      loadInteractiveMap();
+    }
+  });
+</script>
